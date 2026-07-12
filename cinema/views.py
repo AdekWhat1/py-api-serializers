@@ -1,4 +1,5 @@
-from rest_framework import viewsets
+from django.db.models import QuerySet
+from rest_framework import viewsets, serializers
 
 from cinema.models import Genre, Actor, CinemaHall, Movie, MovieSession
 from cinema.serializers import (
@@ -30,14 +31,14 @@ class MovieViewSet(viewsets.ModelViewSet):
     queryset = Movie.objects.all()
     serializer_class = MovieSerializer
 
-    def get_serializer_class(self):
+    def get_serializer_class(self) -> type[serializers.Serializer]:
         if self.action == "list":
             return MovieListSerializer
         elif self.action == "retrieve":
             return MovieRetrieveSerializer
         return MovieSerializer
 
-    def get_queryset(self):
+    def get_queryset(self) -> QuerySet:
         queryset = self.queryset
         if self.action in ("list", "retrieve"):
             return queryset.prefetch_related("genres", "actors")
@@ -48,14 +49,14 @@ class MovieSessionViewSet(viewsets.ModelViewSet):
     queryset = MovieSession.objects.all()
     serializer_class = MovieSessionSerializer
 
-    def get_serializer_class(self):
+    def get_serializer_class(self) -> type[serializers.Serializer]:
         if self.action == "list":
             return MovieSessionListSerializer
         elif self.action == "retrieve":
             return MovieSessionDetailSerializer
         return MovieSessionSerializer
 
-    def get_queryset(self):
+    def get_queryset(self) -> QuerySet:
         if self.action in ("list", "retrieve"):
             return self.queryset.select_related("movie", "cinema_hall")
         return self.queryset
