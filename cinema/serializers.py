@@ -24,7 +24,7 @@ class CinemaHallSerializer(serializers.ModelSerializer):
         model = CinemaHall
         fields = "__all__"
 
-    def get_capacity(self, obj) -> int:
+    def get_capacity(self, obj: CinemaHall) -> int:
         return obj.rows * obj.seats_in_row
 
 
@@ -76,7 +76,7 @@ class MovieSessionListSerializer(serializers.ModelSerializer):
             "cinema_hall_capacity"
         ]
 
-    def to_representation(self, instance) -> dict:
+    def to_representation(self, instance: MovieSession) -> dict:
         data = super().to_representation(instance)
         data["cinema_hall_capacity"] = (
             instance.cinema_hall.rows * instance.cinema_hall.seats_in_row

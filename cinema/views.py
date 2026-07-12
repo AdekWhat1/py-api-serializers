@@ -7,7 +7,10 @@ from cinema.serializers import (
     ActorSerializer,
     CinemaHallSerializer,
     MovieSerializer,
-    MovieSessionSerializer, MovieListSerializer, MovieRetrieveSerializer, MovieSessionListSerializer,
+    MovieSessionSerializer,
+    MovieListSerializer,
+    MovieRetrieveSerializer,
+    MovieSessionListSerializer,
     MovieSessionDetailSerializer,
 )
 
